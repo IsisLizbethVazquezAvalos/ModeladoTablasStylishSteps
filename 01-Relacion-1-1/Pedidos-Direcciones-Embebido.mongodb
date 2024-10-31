@@ -1,0 +1,44 @@
+//Usar la base de datos
+use("stylish-steps-modelado")
+
+//el siguiente modelado se trata de la tabla pedidos y direcciones
+//tiene relación 1:1 y la hice embebida, ya que, al analizar la situación,
+//es una tabla que se consulta con un poco de frecuencia y es más fácil tener 
+//todos los datos juntos para realizar de manera más rapida las consultas
+
+db.createCollection("pedidos-direcciones", {
+    validator:{
+        $jsonSchema:{
+            bsonType: 'object',
+            title: 'Validación del objeto pedidos',
+            required: ['id_pedido', 'id_cliente', 'id_direccion', 'cantidad', ''],
+            properties:{
+
+                id_pedido:{bsonType: 'int'},
+                id_cliente:{bsonType: 'int'},
+                id_direccion:{bsonType: 'int'},
+                cantidad:{bsonType: 'int'},
+                fecha_pedido:{bsonType: 'date'},
+                estado_pedido:{bsonType: 'string'},
+                total:{bsonType:'int'},
+
+                Direcciones: {
+                    bsonType: 'object',
+                    title: 'Validación del objeto direcciones',
+                    required: ['id_direccion', 'colonia', 'calle', 'cp'],
+                    properties:{
+                        id_direccion: { bsonType: 'string'},
+                        colonia: { bsonType: 'string'},
+                        calle: { bsonType: 'string'},
+                        cp: {bsonType: 'int'},
+                        no_exterior: { bsonType: 'int'},
+                        no_interior: { bsonType: 'int'},
+                        descripcion: { bsonType: 'string'},
+                        paqueteria: { bsonType: 'string'},
+                    }
+                }
+                
+            }
+        }
+    }
+})

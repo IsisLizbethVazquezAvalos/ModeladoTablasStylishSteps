@@ -1,0 +1,38 @@
+//Usar la base de datos
+use("stylish-steps-modelado")
+
+
+//el siguiente modelado se trata de la tabla comentarios, 
+//tiene una relación 1:N con Clientes y la hice de manera referenciada, ya que
+//la informacion que se desearía consultar sería pedida por partes y no involucra 
+//muchas tablas o mucha información 
+
+//Crear la colección de comentarios
+db.createCollection("comentarios", {
+    validator:{
+        $jsonSchema:{
+            bsonType: 'object',
+            title: 'Validación del objeto clientes',
+            required: ['id_comentario', 'id_cliente', 'texto_comentario'],
+            properties:{
+
+                id_comentario:{ 
+                    bsonType: 'int',
+                    description: 'id del comentario que el cliente deja',
+                },
+
+                id_cliente:{
+                    bsonType: 'int',
+                    description: 'llave foranea, se relaciona con clientes. la hereda para saber qué cliente hizo el comentario'
+                },
+
+                texto_comentario:{ 
+                    bsonType: 'string',
+                    description: 'opinión del cliente',
+                },
+
+                fecha_comentario:{ bsonType: 'date' }
+            }
+        }
+    }
+})

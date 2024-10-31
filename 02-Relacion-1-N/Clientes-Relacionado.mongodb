@@ -1,0 +1,47 @@
+//Usar la base de datos
+use("stylish-steps-modelado")
+
+//el siguiente modelado se trata de la tabla clientes, 
+//tiene una relación 1:N con Comentarios y la hice de manera referenciada, ya que
+//la informacion que se desearía consultar sería pedida por partes y no involucra 
+//muchas tablas o mucha información 
+
+//Crear la colección de clientes
+db.createCollection("clientes", {
+    validator:{
+        $jsonSchema:{
+            bsonType: 'object',
+            title: 'Validación del objeto clientes',
+            required: ['id_cliente', 'nombre', 'apellidos', 'correo'],
+            properties:{
+
+                id_cliente:{bsonType:'int'},
+
+                nombre:{ 
+                    bsonType: 'string',
+                    description: 'Nombre del cliente',
+                },
+
+                apellidos:{
+                    bsonType: 'string',
+                    description: 'Apellidos del cliente'
+                },
+
+                correo:{ 
+                    bsonType: 'string',
+                    description: 'Correo electronico del cliente',
+                },
+                
+                telefono: { 
+                    bsonType: 'string',
+                },
+
+                pais:{ enum: ['Mexico', 'EUA', 'Madrid', 'España'] },
+
+                fecha_registro:{ bsonType: 'date' }
+            }
+        }
+    }
+})
+
+
